@@ -1,5 +1,4 @@
-rm(list=ls())
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula")
+setwd("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\Copula")
 library(copula)
 library(VineCopula)
 library(rvinecopulib)
@@ -10,14 +9,14 @@ library(gridExtra)
 library(grid)
 
 # set number of samples as a global variable 
-n <- 1000
+n <- 100
 forecast_month <- 1
 
 # Define a list of month and lake abbreviations
 month_names <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug","Sep","Oct","Nov","Dec")
 lake_names  <- c("Eri", "Ont", "MiH", "Sup", "StC") 
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/formatted_input")
+setwd("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\Copula\\formatted_input")
 cal_inps <- data.matrix(read.csv(paste(month.abb[forecast_month],"_12Forecast_3Ant_CopulaInput.csv",sep=""))[1:70,2:226])
 
 # load the names of the vine copula model files 
@@ -25,7 +24,7 @@ model_name <- paste(month.abb[forecast_month],"_15month_1950_2020_RvineDist.rds"
 samp_name  <- paste(month.abb[forecast_month],"_15month_1950_2020_samp.rds",sep="")
 
 # load the L2S confidence intervals
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/R_objects")
+setwd("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\Copula\\R_objects")
 CI95s <- readRDS("1950_2020_L2S_Avg_CI95_width.rds")
 
 ### Define a function that randomly samples n sequences
@@ -83,7 +82,7 @@ forecast_complete_NBS <- function(matched_sample, sample_num){
 ######################
 # Generate Random Samples for each validation month
 ######################
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/R_objects")
+setwd("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\Copula\\R_objects")
 
 rval_samps <- vector(mode="list", length=70)
 count = 1
@@ -98,30 +97,53 @@ for (year in 1:70){
 saveRDS(rval_samps,file="random_validation_samples_100k_100_2021_2090.rds")
 rval_samps <- readRDS(file="random_validation_samples_100k_100_2021_2090.rds")
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/output")
+dir.create("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\output\\flatshiftrunoffsim2\\")
 
-eri_sample <- data.frame(matrix(0, 70, 12))
-mih_sample <- data.frame(matrix(0, 70, 12))
-sup_sample <- data.frame(matrix(0, 70, 12))
-stc_sample <- data.frame(matrix(0, 70, 12))
+for (sim in 1:n) {
 
-samp <- sample.int(1000, 1)
-
-for (year in 1:70) {
-  for (month in 1:12) {
-    eri_sample[year, month] <- rval_samps[[year]][[1]][samp,month]
-    mih_sample[year, month] <- rval_samps[[year]][[3]][samp,month]
-    sup_sample[year, month] <- rval_samps[[year]][[4]][samp,month]
-    stc_sample[year, month] <- rval_samps[[year]][[5]][samp,month]
+  setwd("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\Copula\\output")
+  
+  eri_sample <- data.frame(matrix(0, 70, 12))
+  mih_sample <- data.frame(matrix(0, 70, 12))
+  sup_sample <- data.frame(matrix(0, 70, 12))
+  stc_sample <- data.frame(matrix(0, 70, 12))
+  
+  for (year in 1:70) {
+    for (month in 1:12) {
+      eri_sample[year, month] <- rval_samps[[year]][[1]][sim,month]
+      mih_sample[year, month] <- rval_samps[[year]][[3]][sim,month]
+      sup_sample[year, month] <- rval_samps[[year]][[4]][sim,month]
+      stc_sample[year, month] <- rval_samps[[year]][[5]][sim,month]
+    }
   }
+  
+  colnames(eri_sample) <- colnames(rval_samps[[1]][[1]])
+  colnames(mih_sample) <- colnames(rval_samps[[1]][[3]])
+  colnames(sup_sample) <- colnames(rval_samps[[1]][[4]])
+  colnames(stc_sample) <- colnames(rval_samps[[1]][[5]])
+  
+  write.csv(eri_sample, "Erie_2020_2090_NBS_Forecast.csv")
+  write.csv(mih_sample, "Michigan_2020_2090_NBS_Forecast.csv")
+  write.csv(sup_sample, "Superior_2020_2090_NBS_Forecast.csv")
+  write.csv(stc_sample, "StClair_2020_2090_NBS_Forecast.csv")
+  
+  source("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\r_code\\input_file_structure.R")
+  
+  setwd("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan")
+  
+  system("cglrrm_test.exe")
+  
+  new_dir <- paste("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\output\\flatshiftrunoffsim2\\", sim, sep = "")
+  dir.create(new_dir)
+  setwd(new_dir)
+
+  write.csv(read.table("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\output\\spmmlv.test", skip = 18), "supforecast.csv", row.names = F)
+  write.csv(read.table("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\output\\scmmlv.test", skip = 19), "stclairforecast.csv", row.names = F)
+  write.csv(read.table("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\output\\mhmmlv.test", skip = 19), "mihurforecast.csv", row.names = F)
+  write.csv(read.table("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\output\\ermmlv.test", skip = 19), "erieforecast.csv", row.names = F)
+
+  source("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\r_code\\plotting.R")
+  
 }
 
-colnames(eri_sample) <- colnames(rval_samps[[1]][[1]])
-colnames(mih_sample) <- colnames(rval_samps[[1]][[3]])
-colnames(sup_sample) <- colnames(rval_samps[[1]][[4]])
-colnames(stc_sample) <- colnames(rval_samps[[1]][[5]])
-
-write.csv(eri_sample, "Erie_2020_2090_NBS_Forecast1.csv")
-write.csv(mih_sample, "Michigan_2020_2090_NBS_Forecast1.csv")
-write.csv(sup_sample, "Superior_2020_2090_NBS_Forecast1.csv")
-write.csv(stc_sample, "StClair_2020_2090_NBS_Forecast1.csv")
+setwd("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan")
