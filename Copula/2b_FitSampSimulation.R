@@ -1,5 +1,5 @@
 rm(list=ls())
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
 library(copula)
 library(VineCopula)
@@ -13,46 +13,46 @@ forecast_month <- 1
 ######
 ## Load formatted input P, E, and R values from 1950-2020 for copula fitting
 ######
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/formatted_input")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/formatted_input")
 cal <- data.matrix(read.csv(paste(month.abb[forecast_month],"_12Forecast_3Ant_CopulaInput.csv",sep=""))[1:70,2:226])
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 ######
 
 ######
 ## Define file names to store/retrieve the copula models, pseudo samples, and samples
 ######
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/R_objects")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 struct_name <- paste(month.abb[forecast_month], "_15month_1950_2020_RvineCop.rds", sep = "")
 dist_name <- paste(month.abb[forecast_month], "_15month_1950_2020_RvineDist.rds", sep = "")
 psamp_name <- paste(month.abb[forecast_month], "_15month_1950_2020_psamp.rds", sep = "")
 samp_name <- paste(month.abb[forecast_month], "_15month_1950_2020_samp.rds", sep = "")
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 ######
 
 ######
 ## Generate vine structures to fit the copula model (commented out by default, takes ~1 hr)
 ######
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/R_objects")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 pseudo      <- pseudo_obs(cal)
 struct_vine <- vinecop(pseudo,cores=5)
 saveRDS(struct_vine,struct_name)
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 ######
 
 ######
 ## Generate pseudo samples from the copula models (commented out by default, superceded, takes ~15 min)
 ######
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/R_objects")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 cop   <- readRDS(struct_name)
 psamp <- rvinecop(10000,cop)
 saveRDS(psamp,psamp_name)
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 ######
 
 ######
 ## Fit marginal distributions to observed values 
 ######
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/R_objects")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 
 obs_mat <- cal
 marginal_pars <- vector(mode="list",length=225)
@@ -94,13 +94,13 @@ for (col in 1:225){
   }
 }
 saveRDS(marginal_pars,"1950_2020_Marginal_CDF_full_pars.rds")
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 ######
 
 ######
 ## Create lists of the marginal distributions
 ######
-# setwd("~/Projects/UROP2324/Forecasting/Copula/R_objects")
+# setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 # marginal_lists <- marginal_pars
 # 
 # for (col in 1:225){
@@ -126,21 +126,21 @@ setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula")
 #   
 # }
 # saveRDS(marginal_lists,"1950_2020_Marginal_CDF_lists.rds")
-# setwd("~/Projects/UROP2324/Forecasting/Copula")
+# setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
 ######
 ## Create objects representing the copula distributions using the structure and bivariate copula found earlier and the marginal distributions
 ######
-# setwd("~/Projects/UROP2324/Forecasting/Copula/R_objects")
+# setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 # struct <- readRDS(struct_name)
 # dist   <- vine_dist(margins=marginal_lists, pair_copulas = struct$pair_copulas, structure = struct$structure)
 # saveRDS(dist,dist_name)
-# setwd("~/Projects/UROP2324/Forecasting/Copula")
+# setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
 ######
 ## Generate samples from the copula distributions (
 ###### 
-# setwd("~/Projects/UROP2324/Forecasting/Copula/R_objects")
+# setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 # dist   <- readRDS(dist_name)
 # samp  <- rvine(100000,dist, cores=5)
 # colnames(samp) <- colnames(cal)
@@ -153,7 +153,7 @@ setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula")
 
 ### PRECIPITATION
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/R_objects")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 psamp_mat <- readRDS(psamp_name)
 samp_mat  <- psamp_mat   # #Placeholder, real values will replace [0,1] below
 
@@ -198,15 +198,15 @@ for (col in c(1, 46, 91, 136, 181)) {
 }
 
 saveRDS(samp_mat,samp_name)
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
 ### EVAPORATION
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 evapchange <- read.csv("evapchange.csv", row.names = 1)[,c(3,4,2,1)]
 evapchange <- rbind(evapchange[10:12,], evapchange)
 evapchange <- cbind(evapchange, rep(0, 15))
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/R_objects")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 psamp_mat <- readRDS(psamp_name)
 samp_mat  <- psamp_mat   # #Placeholder, real values will replace [0,1] below
 
@@ -245,17 +245,17 @@ for (col in c(16, 61, 106, 151, 196)) {
 }
 
 saveRDS(samp_mat,samp_name)
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
 ######
 
 ### RUNOFF
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 runoffchange <- ((read.csv("runoffchange.csv", row.names = 1)/100)+1)[,c(3,4,2,1)]
 runoffchange <- rbind(runoffchange[10:12,], runoffchange)
 runoffchange <- cbind(runoffchange, rep(1, 15))
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/R_objects")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 psamp_mat <- readRDS(psamp_name)
 samp_mat  <- psamp_mat   # #Placeholder, real values will replace [0,1] below
 basesamp_mat <- psamp_mat
@@ -294,6 +294,6 @@ for (col in c(31, 76, 121, 166, 211)) {
 }
 
 saveRDS(samp_mat,samp_name)
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
 ######
