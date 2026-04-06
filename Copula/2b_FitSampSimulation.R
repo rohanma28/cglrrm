@@ -297,3 +297,84 @@ saveRDS(samp_mat,samp_name)
 setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
 ######
+
+### THREE-DIMENSIONAL P vs E PLOT
+
+  # supwlmat <- matrix(nrow = 15, ncol = 15)
+  # stcwlmat <- matrix(nrow = 15, ncol = 15)
+  # mihwlmat <- matrix(nrow = 15, ncol = 15)
+  # eriwlmat <- matrix(nrow = 15, ncol = 15)
+
+  # for (precipweight in seq(0.86, 1.14, 0.02)) {
+  #     for (evapweight in seq(0.86, 1.14, 0.02)) {
+  #         setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
+  #         psamp_mat <- readRDS(psamp_name)
+  #         samp_mat  <- psamp_mat   # #Placeholder, real values will replace [0,1] below
+          
+  #         for (col in 1:225){
+  #             comp  <- substr(colnames(psamp_mat)[col],start=nchar(colnames(psamp_mat)[col]),stop=nchar(colnames(psamp_mat)[col]))
+  #             pvals <- psamp_mat[,col]
+              
+              
+  #             if(comp=="R"){
+  #                 samp_mat[,col] <- qshifted_lnorm(pvals,meanlog=marginal_pars[[col]]$logmean,
+  #                                                 sdlog=marginal_pars[[col]]$logstd,
+  #                                                 shift=marginal_pars[[col]]$shift)
+  #             }
+              
+  #             else if (comp != "P" & comp != "E"){
+  #                 print("Error in pseudo-sample column titles")
+  #             }
+          
+  #         }
+          
+  #         pweights <- rep(precipweight, times=15)
+          
+  #         for (col in c(1, 46, 91, 136, 181)) {
+  #             meanvec <- as.numeric(unlist(sapply(marginal_pars, "[", 1)[col:(col+14)]))
+  #             smoothmeans <- meanvec * pweights
+  #             shapevec <- as.numeric(unlist(sapply(marginal_pars, "[", 3)[col:(col+14)]))
+  #             newscales <- smoothmeans / shapevec
+              
+  #             for (subcol in seq(col, col + 14, by = 1)) {
+  #                 comp  <- substr(colnames(psamp_mat)[subcol],start=nchar(colnames(psamp_mat)[subcol]),stop=nchar(colnames(psamp_mat)[subcol]))
+  #                 pvals <- psamp_mat[,subcol]
+                  
+  #                 samp_mat[,subcol] <- qgamma3(pvals,shape=marginal_pars[[subcol]]$shape,
+  #                                             scale=newscales[subcol %% 45],
+  #                                             thres=marginal_pars[[subcol]]$thres)
+  #             }
+  #         }
+          
+  #         eweights <- rep(evapweight, times=15)
+          
+  #         for (col in c(16, 61, 106, 151, 196)) {
+  #             for (subcol in seq(col, col + 14, by = 1)) {
+  #                 comp  <- substr(colnames(psamp_mat)[subcol],start=nchar(colnames(psamp_mat)[subcol]),stop=nchar(colnames(psamp_mat)[subcol]))
+  #                 pvals <- psamp_mat[,subcol]
+                  
+  #                 samp_mat[,subcol] <- qnorm(pvals,
+  #                                         mean=(marginal_pars[[subcol]]$mean*eweights[(subcol - 15) %% 45]),
+  #                                         sd=marginal_pars[[subcol]]$std)
+  #             }
+  #         }
+              
+  #         saveRDS(samp_mat,samp_name)
+  #         setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
+          
+  #         source("~/INSERT_WORKING_DIRECTORY_HERE/Copula/3_MatchingAndPlotting.R")
+          
+  #         supwlmat[round(((precipweight-0.86)*50)+1),round(((evapweight-0.86)*50)+1)] <- mean(supmeans, na.rm = TRUE)
+  #         stcwlmat[round(((precipweight-0.86)*50)+1),round(((evapweight-0.86)*50)+1)] <- mean(stcmeans, na.rm = TRUE)
+  #         mihwlmat[round(((precipweight-0.86)*50)+1),round(((evapweight-0.86)*50)+1)] <- mean(mihmeans, na.rm = TRUE)
+  #         eriwlmat[round(((precipweight-0.86)*50)+1),round(((evapweight-0.86)*50)+1)] <- mean(erimeans, na.rm = TRUE)
+  #     }
+  # }
+
+  # dir.create(~/INSERT_WORKING_DIRECTORY_HERE/output/LongTermWLs)
+  # setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/LongTermWLs")
+
+  # write.csv(supwlmat, "Superior_LongTerm_PEChange_WL.csv")
+  # write.csv(stcwlmat, "StClair_LongTerm_PEChange_WL.csv")
+  # write.csv(mihwlmat, "MichiganHuron_LongTerm_PEChange_WL.csv")
+  # write.csv(eriwlmat, "Erie_LongTerm_PEChange_WL.csv")
