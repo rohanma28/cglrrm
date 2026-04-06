@@ -1,5 +1,5 @@
 rm(list=ls())
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/L2SWBM_med_1950-2022")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/0_L2SWBM_med_1950-2022")
 
 L_forecast <- 12
 L_ant      <- 3
@@ -79,7 +79,7 @@ colnames(CI95_df) <- paste(clas, months, lake, comp, sep = ".")
 #################################
 
 #################################
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/formatted_input")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/1_out_formatted_input")
 filename <- paste(month.abb[forecast_month], "_12Forecast_3Ant_CopulaInput.csv", sep = "")
 write.csv(cal_df, filename)
 

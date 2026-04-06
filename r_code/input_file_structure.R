@@ -12,17 +12,14 @@ yend = 2090
 #########################################
 
 ## Read in the data
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/output")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/output")
 NBS = read.csv("Superior_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
 superior_area = 82100000000
 
-## Subset the data
-#NBS = subset(NBS,Year=="2018")
 
-#setwd(file.path("G:\\My Drive\\Winter 2023\\NOAA-USACE-BIL\\CGLRRM\\TEST\\1may2023_feb2018\\input\\",paste(as.character(j))))
 ## Open output file
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/input")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/input")
 
 sink("MNBS_2008_sp.txt")
 
@@ -68,14 +65,14 @@ sink()
 
 
 ## Read in the data
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/output")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/output")
 NBS = read.csv("Michigan_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
 michigan_area = 117400000000
 
 ## Subset the data
 #NBS = subset(NBS,Year=="2018")
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/input")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/input")
 
 ## Open output file
 sink("MNBS_2008_mh.txt")
@@ -121,14 +118,14 @@ sink()
 
 
 ## Read in the data
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/output")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/output")
 NBS = read.csv("Erie_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
 erie_area = 25700000000
 
 ## Subset the data
 #NBS = subset(NBS,Year=="2018")
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/input")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/input")
 
 ## Open output file
 sink("MNBS_2008_er.txt")
@@ -174,14 +171,14 @@ sink()
 
 
 ## Read in the data
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/Copula/output")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/output")
 NBS = read.csv("StClair_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
 stclair_area = 1114000000
 
 ## Subset the data
 #NBS = subset(NBS,Year=="2018")
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/input/")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/input/")
     
 ## Open output file
 sink("MNBS_2008_sc.txt")

@@ -13,7 +13,7 @@ forecast_month <- 1
 ######
 ## Load formatted input P, E, and R values from 1950-2020 for copula fitting
 ######
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/formatted_input")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/1_out_formatted_input")
 cal <- data.matrix(read.csv(paste(month.abb[forecast_month],"_12Forecast_3Ant_CopulaInput.csv",sep=""))[1:70,2:226])
 setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 ######

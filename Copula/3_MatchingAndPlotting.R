@@ -1,4 +1,4 @@
-setwd("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\Copula")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 library(copula)
 library(VineCopula)
 library(rvinecopulib)
@@ -16,7 +16,7 @@ forecast_month <- 1
 month_names <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug","Sep","Oct","Nov","Dec")
 lake_names  <- c("Eri", "Ont", "MiH", "Sup", "StC") 
 
-setwd("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\Copula\\formatted_input")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/formatted_input")
 cal_inps <- data.matrix(read.csv(paste(month.abb[forecast_month],"_12Forecast_3Ant_CopulaInput.csv",sep=""))[1:70,2:226])
 
 # load the names of the vine copula model files 
@@ -24,7 +24,7 @@ model_name <- paste(month.abb[forecast_month],"_15month_1950_2020_RvineDist.rds"
 samp_name  <- paste(month.abb[forecast_month],"_15month_1950_2020_samp.rds",sep="")
 
 # load the L2S confidence intervals
-setwd("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\Copula\\R_objects")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 CI95s <- readRDS("1950_2020_L2S_Avg_CI95_width.rds")
 
 ### Define a function that randomly samples n sequences
@@ -82,7 +82,7 @@ forecast_complete_NBS <- function(matched_sample, sample_num){
 ######################
 # Generate Random Samples for each validation month
 ######################
-setwd("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\Copula\\R_objects")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 
 rval_samps <- vector(mode="list", length=70)
 count = 1
@@ -97,11 +97,11 @@ for (year in 1:70){
 saveRDS(rval_samps,file="random_validation_samples_100k_100_2021_2090.rds")
 rval_samps <- readRDS(file="random_validation_samples_100k_100_2021_2090.rds")
 
-dir.create("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\output\\flatshiftrunoffsim2\\")
+dir.create("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE/")
 
 for (sim in 1:n) {
 
-  setwd("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\Copula\\output")
+  setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/3_output")
   
   eri_sample <- data.frame(matrix(0, 70, 12))
   mih_sample <- data.frame(matrix(0, 70, 12))
@@ -127,23 +127,23 @@ for (sim in 1:n) {
   write.csv(sup_sample, "Superior_2020_2090_NBS_Forecast.csv")
   write.csv(stc_sample, "StClair_2020_2090_NBS_Forecast.csv")
   
-  source("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\r_code\\input_file_structure.R")
+  source("~/INSERT_WORKING_DIRECTORY_HERE/r_code/input_file_structure.R")
   
-  setwd("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan")
+  setwd("~/INSERT_WORKING_DIRECTORY_HERE/")
   
   system("cglrrm_test.exe")
   
-  new_dir <- paste("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\output\\flatshiftrunoffsim2\\", sim, sep = "")
+  new_dir <- paste("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE/", sim, sep = "")
   dir.create(new_dir)
   setwd(new_dir)
 
-  write.csv(read.table("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\output\\spmmlv.test", skip = 18), "supforecast.csv", row.names = F)
-  write.csv(read.table("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\output\\scmmlv.test", skip = 19), "stclairforecast.csv", row.names = F)
-  write.csv(read.table("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\output\\mhmmlv.test", skip = 19), "mihurforecast.csv", row.names = F)
-  write.csv(read.table("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\output\\ermmlv.test", skip = 19), "erieforecast.csv", row.names = F)
+  write.csv(read.table("~/INSERT_WORKING_DIRECTORY_HERE/output/spmmlv.test", skip = 18), "supforecast.csv", row.names = F)
+  write.csv(read.table("~/INSERT_WORKING_DIRECTORY_HERE/output/scmmlv.test", skip = 19), "stclairforecast.csv", row.names = F)
+  write.csv(read.table("~/INSERT_WORKING_DIRECTORY_HERE/output/mhmmlv.test", skip = 19), "mihurforecast.csv", row.names = F)
+  write.csv(read.table("~/INSERT_WORKING_DIRECTORY_HERE/output/ermmlv.test", skip = 19), "erieforecast.csv", row.names = F)
 
-  source("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan\\r_code\\plotting.R")
+  source("~/INSERT_WORKING_DIRECTORY_HERE/r_code/plotting.R")
   
 }
 
-setwd("C:\\Users\\rathreya\\Downloads\\CGLRRM_Rohan")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/")

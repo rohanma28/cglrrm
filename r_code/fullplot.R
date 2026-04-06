@@ -3,11 +3,11 @@ library("zoo")
 
 # WATER LEVEL PLOT #############################################################
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/output")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/output")
 
 old.data <- read.csv("GLHYD_data_metric.csv")[997:1248,3:7]
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/output/runoffsim")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE")
 
 old.sup.linearMonthly <- as.numeric(old.data[,1])
 old.mihur.linearMonthly <- as.numeric(old.data[,2])
@@ -75,14 +75,14 @@ for (sim in sampsims) {
   
   print(sim)
   
-  setwd(paste("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/output/runoffsim/", sim, sep = ""))
+  setwd(paste("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE/", sim, sep = ""))
   
   supdata <- data.frame(lapply(read.csv("supforecast.csv", header = F)[2:71,], as.numeric))
   mihurdata <- data.frame(lapply(read.csv("mihurforecast.csv", header = F)[2:71,], as.numeric))
   stclairdata <- data.frame(lapply(read.csv("stclairforecast.csv", header = F)[2:71,], as.numeric))
   eriedata <- data.frame(lapply(read.csv("erieforecast.csv", header = F)[2:71,], as.numeric))
   
-  setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/output/runoffsim")
+  setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE")
   
   sup.linearMonthly <- data.frame(pivot_longer(supdata, colnames(supdata)[2:13], values_to = "water_level"))[,3]
   mihur.linearMonthly <- data.frame(pivot_longer(mihurdata, colnames(mihurdata)[2:13], values_to = "water_level"))[,3]
@@ -160,7 +160,7 @@ dev.off()
 
 ## HISTORICAL DATA EXTRACTION ##################################################
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/output")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/output")
 
 old.data <- read.csv("GLHYD_data_metric.csv")[397:1248,3:7]
 
@@ -216,13 +216,13 @@ mihurbase.Monthly <- data.frame(matrix(data = NA, nrow = 1000, ncol = 840))
 stclairbase.Monthly <- data.frame(matrix(data = NA, nrow = 1000, ncol = 840))
 eriebase.Monthly <- data.frame(matrix(data = NA, nrow = 1000, ncol = 840))
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/output/baseline")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/baseline")
 
 for (sim in 1:1000) {
   
   print(sim)
   
-  setwd(paste("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/output/baseline/", sim, sep = ""))
+  setwd(paste("~/INSERT_WORKING_DIRECTORY_HERE/output/baseline/", sim, sep = ""))
   
   supdata <- data.frame(lapply(read.csv("supforecast.csv", header = F)[2:71,], as.numeric))
   mihurdata <- data.frame(lapply(read.csv("mihurforecast.csv", header = F)[2:71,], as.numeric))
@@ -303,13 +303,13 @@ mihur.Monthly <- data.frame(matrix(data = NA, nrow = 1000, ncol = 840))
 stclair.Monthly <- data.frame(matrix(data = NA, nrow = 1000, ncol = 840))
 erie.Monthly <- data.frame(matrix(data = NA, nrow = 1000, ncol = 840))
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/output/runoffsim")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE")
 
 for (sim in 1:1000) {
   
   print(sim)
   
-  setwd(paste("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/output/runoffsim/", sim, sep = ""))
+  setwd(paste("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE/", sim, sep = ""))
   
   supdata <- data.frame(lapply(read.csv("supforecast.csv", header = F)[2:71,], as.numeric))
   mihurdata <- data.frame(lapply(read.csv("mihurforecast.csv", header = F)[2:71,], as.numeric))
@@ -387,7 +387,7 @@ erieavgsims <- apply(erie.simframe, 1, mean)
 timeline <- seq.Date(from = as.Date("1950-01-01"), to = as.Date("2090-12-01"), by = "1 month")
 
 ## STANDARD DEVIATION PLOT #############################################################
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/output/runoffsim")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE")
 
 plot_out = 'varchange.png'
 if (file.exists(plot_out)) {
@@ -496,7 +496,7 @@ box()
 dev.off()
 
 ## MAXIMUM PLOT #############################################################
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/output/runoffsim")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE")
 
 plot_out = 'maxchange.png'
 if (file.exists(plot_out)) {
@@ -607,7 +607,7 @@ box()
 dev.off()
 
 ## AVERAGE PLOT #############################################################
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/output/runoffsim")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE")
 
 plot_out = 'avgchange.png'
 if (file.exists(plot_out)) {
@@ -718,7 +718,7 @@ box()
 dev.off()
 
 ## MINIMUM PLOT #############################################################
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/output/runoffsim")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE")
 
 plot_out = 'minchange.png'
 if (file.exists(plot_out)) {

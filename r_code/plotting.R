@@ -1,8 +1,6 @@
 library("tidyverse")
 
-setwd("/Volumes/Hydro/projects/routing_models/CGLRRM_Rohan/output/sim_3")
-
-old.data <- read.csv("GLHYD_data_metric.csv")[997:1248,3:7]
+old.data <- read.csv("~/INSERT_WORKING_DIRECTORY_HERE/output/GLHYD_data_metric.csv")[997:1248,3:7]
 
 supdata <- read.csv("supforecast.csv", header = F)
 mihurdata <- read.csv("mihurforecast.csv", header = F)
