@@ -1,5 +1,5 @@
 rm(list=ls())
-setwd("~/Projects/UROP2324/Forecasting/Copula/L2SWBM_med_1950-2022")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/L2SWBM_med_1950-2022")
 
 L_forecast <- 12
 L_ant      <- 3
@@ -79,7 +79,7 @@ colnames(CI95_df) <- paste(clas, months, lake, comp, sep = ".")
 #################################
 
 #################################
-setwd("~/Projects/UROP2324/Forecasting/Copula/formatted_input")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/formatted_input")
 filename <- paste(month.abb[forecast_month], "_12Forecast_3Ant_CopulaInput.csv", sep = "")
 write.csv(cal_df, filename)
 
@@ -87,6 +87,6 @@ write.csv(cal_df, filename)
 
 
 ##################################
-setwd("~/Projects/UROP2324/Forecasting/Copula/R_objects")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 avg_CI95 <- apply(CI95_df[1:70,],2,mean)
 saveRDS(avg_CI95,"1950_2020_L2S_Avg_CI95_width.rds")
