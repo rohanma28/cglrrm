@@ -13,7 +13,7 @@ forecast_month <- 1
 ######
 ## Load formatted input P, E, and R values from 1950-2020 for copula fitting
 ######
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/formatted_input")
+setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/1_out_formatted_input")
 cal <- data.matrix(read.csv(paste(month.abb[forecast_month],"_12Forecast_3Ant_CopulaInput.csv",sep=""))[1:70,2:226])
 setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 ######
@@ -202,7 +202,7 @@ setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
 ### EVAPORATION
 setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
-evapchange <- read.csv("evapchange.csv", row.names = 1)[,c(3,4,2,1)]
+evapchange <- read.csv("~/INSERT_WORKING_DIRECTORY_HERE/Copula/2b_input_changefiles/evapchange.csv", row.names = 1)[,c(3,4,2,1)]
 evapchange <- rbind(evapchange[10:12,], evapchange)
 evapchange <- cbind(evapchange, rep(0, 15))
 
@@ -251,7 +251,7 @@ setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
 ### RUNOFF
 setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
-runoffchange <- ((read.csv("runoffchange.csv", row.names = 1)/100)+1)[,c(3,4,2,1)]
+runoffchange <- ((read.csv("~/INSERT_WORKING_DIRECTORY_HERE/Copula/2b_input_changefiles/runoffchange.csv", row.names = 1)/100)+1)[,c(3,4,2,1)]
 runoffchange <- rbind(runoffchange[10:12,], runoffchange)
 runoffchange <- cbind(runoffchange, rep(1, 15))
 
