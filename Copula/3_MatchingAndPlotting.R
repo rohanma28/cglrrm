@@ -1,4 +1,3 @@
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 library(copula)
 library(VineCopula)
 library(rvinecopulib)
@@ -16,16 +15,14 @@ forecast_month <- 1
 month_names <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug","Sep","Oct","Nov","Dec")
 lake_names  <- c("Eri", "Ont", "MiH", "Sup", "StC") 
 
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/formatted_input")
-cal_inps <- data.matrix(read.csv(paste(month.abb[forecast_month],"_12Forecast_3Ant_CopulaInput.csv",sep=""))[1:70,2:226])
+cal_inps <- data.matrix("1_out_formatted_input/", read.csv(paste(month.abb[forecast_month],"_12Forecast_3Ant_CopulaInput.csv",sep=""))[1:70,2:226])
 
 # load the names of the vine copula model files 
-model_name <- paste(month.abb[forecast_month],"_15month_1950_2020_RvineDist.rds",sep="")
-samp_name  <- paste(month.abb[forecast_month],"_15month_1950_2020_samp.rds",sep="")
+model_name <- paste("R_objects/", month.abb[forecast_month],"_15month_1950_2020_RvineDist.rds",sep="")
+samp_name  <- paste("R_objects/", month.abb[forecast_month],"_15month_1950_2020_samp.rds",sep="")
 
 # load the L2S confidence intervals
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
-CI95s <- readRDS("1950_2020_L2S_Avg_CI95_width.rds")
+CI95s <- readRDS("R_objects/1950_2020_L2S_Avg_CI95_width.rds")
 
 ### Define a function that randomly samples n sequences
 random_sample <- function(sample_num){
@@ -82,7 +79,6 @@ forecast_complete_NBS <- function(matched_sample, sample_num){
 ######################
 # Generate Random Samples for each validation month
 ######################
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 
 rval_samps <- vector(mode="list", length=70)
 count = 1
@@ -94,14 +90,12 @@ for (year in 1:70){
   count = count+1
 }
 
-saveRDS(rval_samps,file="random_validation_samples_100k_100_2021_2090.rds")
-rval_samps <- readRDS(file="random_validation_samples_100k_100_2021_2090.rds")
+saveRDS(rval_samps,file="R_objects/random_validation_samples_100k_100_2021_2090.rds")
+rval_samps <- readRDS(file="R_objects/random_validation_samples_100k_100_2021_2090.rds")
 
-dir.create("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE/")
+dir.create("/output/INSERT_SIM_NAME_HERE")
 
 for (sim in 1:n) {
-
-  setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/3_output")
   
   eri_sample <- data.frame(matrix(0, 70, 12))
   mih_sample <- data.frame(matrix(0, 70, 12))
@@ -122,28 +116,23 @@ for (sim in 1:n) {
   colnames(sup_sample) <- colnames(rval_samps[[1]][[4]])
   colnames(stc_sample) <- colnames(rval_samps[[1]][[5]])
   
-  write.csv(eri_sample, "Erie_2020_2090_NBS_Forecast.csv")
-  write.csv(mih_sample, "Michigan_2020_2090_NBS_Forecast.csv")
-  write.csv(sup_sample, "Superior_2020_2090_NBS_Forecast.csv")
-  write.csv(stc_sample, "StClair_2020_2090_NBS_Forecast.csv")
+  write.csv(eri_sample, "3_output/Erie_2020_2090_NBS_Forecast.csv")
+  write.csv(mih_sample, "3_output/Michigan_2020_2090_NBS_Forecast.csv")
+  write.csv(sup_sample, "3_output/Superior_2020_2090_NBS_Forecast.csv")
+  write.csv(stc_sample, "3_output/StClair_2020_2090_NBS_Forecast.csv")
   
-  source("~/INSERT_WORKING_DIRECTORY_HERE/r_code/input_file_structure.R")
+  source("/r_code/input_file_structure.R")
   
-  setwd("~/INSERT_WORKING_DIRECTORY_HERE/")
+  system("/cglrrm_test.exe")
   
-  system("cglrrm_test.exe")
-  
-  new_dir <- paste("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE/", sim, sep = "")
+  new_dir <- paste("/output/INSERT_SIM_NAME_HERE/", sim, sep = "")
   dir.create(new_dir)
-  setwd(new_dir)
 
-  write.csv(read.table("~/INSERT_WORKING_DIRECTORY_HERE/output/spmmlv.test", skip = 18), "supforecast.csv", row.names = F)
-  write.csv(read.table("~/INSERT_WORKING_DIRECTORY_HERE/output/scmmlv.test", skip = 19), "stclairforecast.csv", row.names = F)
-  write.csv(read.table("~/INSERT_WORKING_DIRECTORY_HERE/output/mhmmlv.test", skip = 19), "mihurforecast.csv", row.names = F)
-  write.csv(read.table("~/INSERT_WORKING_DIRECTORY_HERE/output/ermmlv.test", skip = 19), "erieforecast.csv", row.names = F)
+  write.csv(read.table("/raw_output/spmmlv.test", skip = 18), paste(new_dir, "supforecast.csv", sep = ""), row.names = F)
+  write.csv(read.table("/raw_output/scmmlv.test", skip = 19), paste(new_dir, "stclairforecast.csv", sep = ""), row.names = F)
+  write.csv(read.table("/raw_output/mhmmlv.test", skip = 19), paste(new_dir, "mihurforecast.csv", sep = ""), row.names = F)
+  write.csv(read.table("/raw_output/ermmlv.test", skip = 19), paste(new_dir, "erieforecast.csv", sep = ""), row.names = F)
 
-  source("~/INSERT_WORKING_DIRECTORY_HERE/r_code/plotting.R")
+  source("/r_code/plotting.R")
   
 }
-
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/")
