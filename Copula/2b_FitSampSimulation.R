@@ -1,6 +1,3 @@
-rm(list=ls())
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
-
 library(copula)
 library(VineCopula)
 library(rvinecopulib)
@@ -13,46 +10,37 @@ forecast_month <- 1
 ######
 ## Load formatted input P, E, and R values from 1950-2020 for copula fitting
 ######
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/1_out_formatted_input")
-cal <- data.matrix(read.csv(paste(month.abb[forecast_month],"_12Forecast_3Ant_CopulaInput.csv",sep=""))[1:70,2:226])
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
+cal <- data.matrix(read.csv(paste("1_out_formatted_input/", month.abb[forecast_month],"_12Forecast_3Ant_CopulaInput.csv",sep=""))[1:70,2:226])
 ######
 
 ######
 ## Define file names to store/retrieve the copula models, pseudo samples, and samples
 ######
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
-struct_name <- paste(month.abb[forecast_month], "_15month_1950_2020_RvineCop.rds", sep = "")
-dist_name <- paste(month.abb[forecast_month], "_15month_1950_2020_RvineDist.rds", sep = "")
-psamp_name <- paste(month.abb[forecast_month], "_15month_1950_2020_psamp.rds", sep = "")
-samp_name <- paste(month.abb[forecast_month], "_15month_1950_2020_samp.rds", sep = "")
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
+struct_name <- paste("R_objects/", month.abb[forecast_month], "_15month_1950_2020_RvineCop.rds", sep = "")
+dist_name <- paste("R_objects/", month.abb[forecast_month], "_15month_1950_2020_RvineDist.rds", sep = "")
+psamp_name <- paste("R_objects/", month.abb[forecast_month], "_15month_1950_2020_psamp.rds", sep = "")
+samp_name <- paste("R_objects/", month.abb[forecast_month], "_15month_1950_2020_samp.rds", sep = "")
 ######
 
 ######
 ## Generate vine structures to fit the copula model (commented out by default, takes ~1 hr)
 ######
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 pseudo      <- pseudo_obs(cal)
 struct_vine <- vinecop(pseudo,cores=5)
 saveRDS(struct_vine,struct_name)
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 ######
 
 ######
 ## Generate pseudo samples from the copula models (commented out by default, superceded, takes ~15 min)
 ######
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 cop   <- readRDS(struct_name)
 psamp <- rvinecop(10000,cop)
 saveRDS(psamp,psamp_name)
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 ######
 
 ######
 ## Fit marginal distributions to observed values 
 ######
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 
 obs_mat <- cal
 marginal_pars <- vector(mode="list",length=225)
@@ -93,14 +81,12 @@ for (col in 1:225){
     print("Error in observation column titles")
   }
 }
-saveRDS(marginal_pars,"1950_2020_Marginal_CDF_full_pars.rds")
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
+saveRDS(marginal_pars,"R_objects/1950_2020_Marginal_CDF_full_pars.rds")
 ######
 
 ######
 ## Create lists of the marginal distributions
 ######
-# setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 # marginal_lists <- marginal_pars
 # 
 # for (col in 1:225){
@@ -125,26 +111,21 @@ setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 #   }
 #   
 # }
-# saveRDS(marginal_lists,"1950_2020_Marginal_CDF_lists.rds")
-# setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
+# saveRDS(marginal_lists,"R_objects/1950_2020_Marginal_CDF_lists.rds")
 
 ######
 ## Create objects representing the copula distributions using the structure and bivariate copula found earlier and the marginal distributions
 ######
-# setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 # struct <- readRDS(struct_name)
 # dist   <- vine_dist(margins=marginal_lists, pair_copulas = struct$pair_copulas, structure = struct$structure)
 # saveRDS(dist,dist_name)
-# setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
 ######
 ## Generate samples from the copula distributions (
 ###### 
-# setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 # dist   <- readRDS(dist_name)
 # samp  <- rvine(100000,dist, cores=5)
 # colnames(samp) <- colnames(cal)
-# saveRDS(samp,samp_name)
 ######
 
 ######
@@ -153,7 +134,6 @@ setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
 ### PRECIPITATION
 
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 psamp_mat <- readRDS(psamp_name)
 samp_mat  <- psamp_mat   # #Placeholder, real values will replace [0,1] below
 
@@ -198,15 +178,12 @@ for (col in c(1, 46, 91, 136, 181)) {
 }
 
 saveRDS(samp_mat,samp_name)
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
 ### EVAPORATION
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
-evapchange <- read.csv("~/INSERT_WORKING_DIRECTORY_HERE/Copula/2b_input_changefiles/evapchange.csv", row.names = 1)[,c(3,4,2,1)]
+evapchange <- read.csv("2b_input_changefiles/evapchange.csv", row.names = 1)[,c(3,4,2,1)]
 evapchange <- rbind(evapchange[10:12,], evapchange)
 evapchange <- cbind(evapchange, rep(0, 15))
 
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 psamp_mat <- readRDS(psamp_name)
 samp_mat  <- psamp_mat   # #Placeholder, real values will replace [0,1] below
 
@@ -245,17 +222,14 @@ for (col in c(16, 61, 106, 151, 196)) {
 }
 
 saveRDS(samp_mat,samp_name)
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
 ######
 
 ### RUNOFF
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
-runoffchange <- ((read.csv("~/INSERT_WORKING_DIRECTORY_HERE/Copula/2b_input_changefiles/runoffchange.csv", row.names = 1)/100)+1)[,c(3,4,2,1)]
+runoffchange <- ((read.csv("2b_input_changefiles/runoffchange.csv", row.names = 1)/100)+1)[,c(3,4,2,1)]
 runoffchange <- rbind(runoffchange[10:12,], runoffchange)
 runoffchange <- cbind(runoffchange, rep(1, 15))
 
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
 psamp_mat <- readRDS(psamp_name)
 samp_mat  <- psamp_mat   # #Placeholder, real values will replace [0,1] below
 basesamp_mat <- psamp_mat
@@ -294,7 +268,6 @@ for (col in c(31, 76, 121, 166, 211)) {
 }
 
 saveRDS(samp_mat,samp_name)
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
 ######
 
@@ -307,7 +280,6 @@ setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
 
   # for (precipweight in seq(0.86, 1.14, 0.02)) {
   #     for (evapweight in seq(0.86, 1.14, 0.02)) {
-  #         setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/R_objects")
   #         psamp_mat <- readRDS(psamp_name)
   #         samp_mat  <- psamp_mat   # #Placeholder, real values will replace [0,1] below
           
@@ -360,9 +332,8 @@ setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
   #         }
               
   #         saveRDS(samp_mat,samp_name)
-  #         setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
           
-  #         source("~/INSERT_WORKING_DIRECTORY_HERE/Copula/3_MatchingAndPlotting.R")
+  #         source("3_MatchingAndPlotting.R")
           
   #         supwlmat[round(((precipweight-0.86)*50)+1),round(((evapweight-0.86)*50)+1)] <- mean(supmeans, na.rm = TRUE)
   #         stcwlmat[round(((precipweight-0.86)*50)+1),round(((evapweight-0.86)*50)+1)] <- mean(stcmeans, na.rm = TRUE)
@@ -371,10 +342,9 @@ setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula")
   #     }
   # }
 
-  # dir.create(~/INSERT_WORKING_DIRECTORY_HERE/output/LongTermWLs)
-  # setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/LongTermWLs")
+  # dir.create("/output/LongTermWLs")
 
-  # write.csv(supwlmat, "Superior_LongTerm_PEChange_WL.csv")
-  # write.csv(stcwlmat, "StClair_LongTerm_PEChange_WL.csv")
-  # write.csv(mihwlmat, "MichiganHuron_LongTerm_PEChange_WL.csv")
-  # write.csv(eriwlmat, "Erie_LongTerm_PEChange_WL.csv")
+  # write.csv(supwlmat, "/output/LongTermWLs/Superior_LongTerm_PEChange_WL.csv")
+  # write.csv(stcwlmat, "/output/LongTermWLs/StClair_LongTerm_PEChange_WL.csv")
+  # write.csv(mihwlmat, "/output/LongTermWLs/MichiganHuron_LongTerm_PEChange_WL.csv")
+  # write.csv(eriwlmat, "/output/LongTermWLs/Erie_LongTerm_PEChange_WL.csv")
