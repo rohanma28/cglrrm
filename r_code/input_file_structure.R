@@ -12,16 +12,13 @@ yend = 2090
 #########################################
 
 ## Read in the data
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/output")
-NBS = read.csv("Superior_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
+NBS = read.csv("/Copula/output/Superior_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
 superior_area = 82100000000
 
 
 ## Open output file
 
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/input")
-
-sink("MNBS_2008_sp.txt")
+sink("/input/MNBS_2008_sp.txt")
 
 ## write the output
 cat("# LAKE SUPERIOR MONTHLY NET BASIN SUPPLY (10m3s)")
@@ -65,17 +62,15 @@ sink()
 
 
 ## Read in the data
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/output")
-NBS = read.csv("Michigan_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
+NBS = read.csv("/Copula/output/Michigan_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
 michigan_area = 117400000000
 
 ## Subset the data
 #NBS = subset(NBS,Year=="2018")
 
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/input")
 
 ## Open output file
-sink("MNBS_2008_mh.txt")
+sink("/input/MNBS_2008_mh.txt")
 
 ## write the output
 cat("# LAKE MICHIGAN-HURON MONTHLY NET BASIN SUPPLY (10m3s)")
@@ -118,17 +113,14 @@ sink()
 
 
 ## Read in the data
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/output")
-NBS = read.csv("Erie_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
+NBS = read.csv("/Copula/output/Erie_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
 erie_area = 25700000000
 
 ## Subset the data
 #NBS = subset(NBS,Year=="2018")
 
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/input")
-
 ## Open output file
-sink("MNBS_2008_er.txt")
+sink("/input/MNBS_2008_er.txt")
 
 ## write the output
 cat("# LAKE ERIE MONTHLY NET BASIN SUPPLY (10m3s)")
@@ -171,17 +163,14 @@ sink()
 
 
 ## Read in the data
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/Copula/output")
-NBS = read.csv("StClair_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
+NBS = read.csv("/Copula/output/StClair_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
 stclair_area = 1114000000
 
 ## Subset the data
 #NBS = subset(NBS,Year=="2018")
-
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/input/")
     
 ## Open output file
-sink("MNBS_2008_sc.txt")
+sink("/input/MNBS_2008_sc.txt")
 
 ## write the output
 cat("# LAKE ST. CLAIR MONTHLY NET BASIN SUPPLY (10m3s)")
