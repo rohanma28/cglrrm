@@ -2,7 +2,7 @@ Sup NBS Data: ./input/MNBS_2008_sp.txt
 MHu NBS data: ./input/MNBS_2008_mh.txt
 Eri NBS data: ./input/MNBS_2008_er.txt
 Stc NBS data: ./input/MNBS_2008_sc.txt
-Output Directory: ./output/
+Output Directory: ./raw_output/
 Sup Start Level      : 183.58 m
 MHu Start Level      : 177.11 m
 Eri Start Level      : 174.68 m
