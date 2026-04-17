@@ -12,7 +12,7 @@ yend = 2090
 #########################################
 
 ## Read in the data
-NBS = read.csv("/Copula/output/Superior_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
+NBS = read.csv("/Copula/3_output/Superior_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
 superior_area = 82100000000
 
 
@@ -62,7 +62,7 @@ sink()
 
 
 ## Read in the data
-NBS = read.csv("/Copula/output/Michigan_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
+NBS = read.csv("/Copula/3_output/Michigan_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
 michigan_area = 117400000000
 
 ## Subset the data
@@ -113,7 +113,7 @@ sink()
 
 
 ## Read in the data
-NBS = read.csv("/Copula/output/Erie_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
+NBS = read.csv("/Copula/3_output/Erie_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
 erie_area = 25700000000
 
 ## Subset the data
@@ -163,7 +163,7 @@ sink()
 
 
 ## Read in the data
-NBS = read.csv("/Copula/output/StClair_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
+NBS = read.csv("/Copula/3_output/StClair_2020_2090_NBS_Forecast.csv", header=T, row.names = 1)
 stclair_area = 1114000000
 
 ## Subset the data
