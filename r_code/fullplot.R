@@ -3,11 +3,7 @@ library("zoo")
 
 # WATER LEVEL PLOT #############################################################
 
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/output")
-
-old.data <- read.csv("GLHYD_data_metric.csv")[997:1248,3:7]
-
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE")
+old.data <- read.csv("/output/GLHYD_data_metric.csv")[997:1248,3:7]
 
 old.sup.linearMonthly <- as.numeric(old.data[,1])
 old.mihur.linearMonthly <- as.numeric(old.data[,2])
@@ -72,17 +68,11 @@ sampsims <- sample.int(1000, 100)
 sampbold <- sampsims[100]
 
 for (sim in sampsims) {
-  
-  print(sim)
-  
-  setwd(paste("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE/", sim, sep = ""))
-  
-  supdata <- data.frame(lapply(read.csv("supforecast.csv", header = F)[2:71,], as.numeric))
-  mihurdata <- data.frame(lapply(read.csv("mihurforecast.csv", header = F)[2:71,], as.numeric))
-  stclairdata <- data.frame(lapply(read.csv("stclairforecast.csv", header = F)[2:71,], as.numeric))
-  eriedata <- data.frame(lapply(read.csv("erieforecast.csv", header = F)[2:71,], as.numeric))
-  
-  setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE")
+    
+  supdata <- data.frame(lapply(read.csv(paste("/output/INSERT_SIM_NAME_HERE/", sim, "/supforecast.csv", sep = ""), header = F)[2:71,], as.numeric))
+  mihurdata <- data.frame(lapply(read.csv(paste("/output/INSERT_SIM_NAME_HERE/", sim, "/mihurforecast.csv", sep = ""), header = F)[2:71,], as.numeric))
+  stclairdata <- data.frame(lapply(read.csv(paste("/output/INSERT_SIM_NAME_HERE/", sim,"/stclairforecast.csv", sep = ""), header = F)[2:71,], as.numeric))
+  eriedata <- data.frame(lapply(read.csv(paste("/output/INSERT_SIM_NAME_HERE/", sim, "/erieforecast.csv", sep = ""), header = F)[2:71,], as.numeric))
   
   sup.linearMonthly <- data.frame(pivot_longer(supdata, colnames(supdata)[2:13], values_to = "water_level"))[,3]
   mihur.linearMonthly <- data.frame(pivot_longer(mihurdata, colnames(mihurdata)[2:13], values_to = "water_level"))[,3]
@@ -160,9 +150,7 @@ dev.off()
 
 ## HISTORICAL DATA EXTRACTION ##################################################
 
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/output")
-
-old.data <- read.csv("GLHYD_data_metric.csv")[397:1248,3:7]
+old.data <- read.csv("/output/GLHYD_data_metric.csv")[397:1248,3:7]
 
 old.sup.linearMonthly <- as.numeric(old.data[,1])
 old.mihur.linearMonthly <- as.numeric(old.data[,2])
@@ -216,18 +204,14 @@ mihurbase.Monthly <- data.frame(matrix(data = NA, nrow = 1000, ncol = 840))
 stclairbase.Monthly <- data.frame(matrix(data = NA, nrow = 1000, ncol = 840))
 eriebase.Monthly <- data.frame(matrix(data = NA, nrow = 1000, ncol = 840))
 
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/baseline")
-
 for (sim in 1:1000) {
   
   print(sim)
   
-  setwd(paste("~/INSERT_WORKING_DIRECTORY_HERE/output/baseline/", sim, sep = ""))
-  
-  supdata <- data.frame(lapply(read.csv("supforecast.csv", header = F)[2:71,], as.numeric))
-  mihurdata <- data.frame(lapply(read.csv("mihurforecast.csv", header = F)[2:71,], as.numeric))
-  stclairdata <- data.frame(lapply(read.csv("stclairforecast.csv", header = F)[2:71,], as.numeric))
-  eriedata <- data.frame(lapply(read.csv("erieforecast.csv", header = F)[2:71,], as.numeric))
+  supdata <- data.frame(lapply(read.csv(paste("/output/baseline/", sim, "/supforecast.csv", sep = ""), header = F)[2:71,], as.numeric))
+  mihurdata <- data.frame(lapply(read.csv(paste("/output/baseline/", sim, "/mihurforecast.csv", sep = ""), header = F)[2:71,], as.numeric))
+  stclairdata <- data.frame(lapply(read.csv(paste("/output/baseline/", sim,"/stclairforecast.csv", sep = ""), header = F)[2:71,], as.numeric))
+  eriedata <- data.frame(lapply(read.csv(paste("/output/baseline/", sim, "/erieforecast.csv", sep = ""), header = F)[2:71,], as.numeric))
   
   sup.temp <- data.frame(pivot_longer(supdata, colnames(supdata)[2:13], values_to = "water_level"))[,3]
   mihur.temp <- data.frame(pivot_longer(mihurdata, colnames(mihurdata)[2:13], values_to = "water_level"))[,3]
@@ -303,18 +287,14 @@ mihur.Monthly <- data.frame(matrix(data = NA, nrow = 1000, ncol = 840))
 stclair.Monthly <- data.frame(matrix(data = NA, nrow = 1000, ncol = 840))
 erie.Monthly <- data.frame(matrix(data = NA, nrow = 1000, ncol = 840))
 
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE")
-
 for (sim in 1:1000) {
   
   print(sim)
   
-  setwd(paste("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE/", sim, sep = ""))
-  
-  supdata <- data.frame(lapply(read.csv("supforecast.csv", header = F)[2:71,], as.numeric))
-  mihurdata <- data.frame(lapply(read.csv("mihurforecast.csv", header = F)[2:71,], as.numeric))
-  stclairdata <- data.frame(lapply(read.csv("stclairforecast.csv", header = F)[2:71,], as.numeric))
-  eriedata <- data.frame(lapply(read.csv("erieforecast.csv", header = F)[2:71,], as.numeric))
+  supdata <- data.frame(lapply(read.csv(paste("/output/INSERT_SIM_NAME_HERE/", sim, "/supforecast.csv", sep = ""), header = F)[2:71,], as.numeric))
+  mihurdata <- data.frame(lapply(read.csv(paste("/output/INSERT_SIM_NAME_HERE/", sim, "/mihurforecast.csv", sep = ""), header = F)[2:71,], as.numeric))
+  stclairdata <- data.frame(lapply(read.csv(paste("/output/INSERT_SIM_NAME_HERE/", sim,"/stclairforecast.csv", sep = ""), header = F)[2:71,], as.numeric))
+  eriedata <- data.frame(lapply(read.csv(paste("/output/INSERT_SIM_NAME_HERE/", sim, "/erieforecast.csv", sep = ""), header = F)[2:71,], as.numeric))
   
   sup.temp <- data.frame(pivot_longer(supdata, colnames(supdata)[2:13], values_to = "water_level"))[,3]
   mihur.temp <- data.frame(pivot_longer(mihurdata, colnames(mihurdata)[2:13], values_to = "water_level"))[,3]
@@ -387,9 +367,8 @@ erieavgsims <- apply(erie.simframe, 1, mean)
 timeline <- seq.Date(from = as.Date("1950-01-01"), to = as.Date("2090-12-01"), by = "1 month")
 
 ## STANDARD DEVIATION PLOT #############################################################
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE")
 
-plot_out = 'varchange.png'
+plot_out = '/output/INSERT_SIM_NAME_HERE/varchange.png'
 if (file.exists(plot_out)) {
   file.remove(plot_out)
 }
@@ -496,9 +475,8 @@ box()
 dev.off()
 
 ## MAXIMUM PLOT #############################################################
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE")
 
-plot_out = 'maxchange.png'
+plot_out = '/output/INSERT_SIM_NAME_HERE/maxchange.png'
 if (file.exists(plot_out)) {
   file.remove(plot_out)
 }
@@ -607,9 +585,8 @@ box()
 dev.off()
 
 ## AVERAGE PLOT #############################################################
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE")
 
-plot_out = 'avgchange.png'
+plot_out = '/output/INSERT_SIM_NAME_HERE/avgchange.png'
 if (file.exists(plot_out)) {
   file.remove(plot_out)
 }
@@ -718,9 +695,8 @@ box()
 dev.off()
 
 ## MINIMUM PLOT #############################################################
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/INSERT_SIM_NAME_HERE")
 
-plot_out = 'minchange.png'
+plot_out = '/output/INSERT_SIM_NAME_HERE/minchange.png'
 if (file.exists(plot_out)) {
   file.remove(plot_out)
 }
