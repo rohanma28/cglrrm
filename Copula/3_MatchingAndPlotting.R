@@ -133,6 +133,10 @@ for (sim in 1:n) {
   write.csv(read.table("/raw_output/mhmmlv.test", skip = 19), paste(new_dir, "mihurforecast.csv", sep = ""), row.names = F)
   write.csv(read.table("/raw_output/ermmlv.test", skip = 19), paste(new_dir, "erieforecast.csv", sep = ""), row.names = F)
 
+  setwd(new_dir)
+  
   source("/r_code/plotting.R")
+
+  setwd("/Copula/")
   
 }
