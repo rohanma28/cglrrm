@@ -1,10 +1,9 @@
 library("plotly")
 
-setwd("~/INSERT_WORKING_DIRECTORY_HERE/output/LongTermWLs")
-eri <- data.matrix(read.csv("Erie_LongTerm_PEChange_WL.csv", row.names = 1))
-mih <- data.matrix(read.csv("MichiganHuron_LongTerm_PEChange_WL.csv", row.names = 1))
-stc <- data.matrix(read.csv("StClair_LongTerm_PEChange_WL.csv", row.names = 1))
-sup <- data.matrix(read.csv("Superior_LongTerm_PEChange_WL.csv", row.names = 1))
+eri <- data.matrix(read.csv("/output/LongTermWLs/Erie_LongTerm_PEChange_WL.csv", row.names = 1))
+mih <- data.matrix(read.csv("/output/LongTermWLs/MichiganHuron_LongTerm_PEChange_WL.csv", row.names = 1))
+stc <- data.matrix(read.csv("/output/LongTermWLs/StClair_LongTerm_PEChange_WL.csv", row.names = 1))
+sup <- data.matrix(read.csv("/output/LongTermWLs/Superior_LongTerm_PEChange_WL.csv", row.names = 1))
 
 ##### ERIE #####
 
